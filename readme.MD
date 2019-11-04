@@ -2,15 +2,18 @@ DECLARE ---> not necessary but used to declare variable
 BEGIN   ---> to start execution of some statements
 
 ---> print command
+```
 	dbms_output.put_line(<string>);
-
+```
 ---> print command with concatenation using pipeline operator - ||
-	dbms_output.put_line(<string 1> || <string 2>);
-
+```
+dbms_output.put_line(<string 1> || <string 2>);
+```
 
 ---> makes connection with server for buffer outputs
+```
 	SQL> set serveroutput on
-
+```
 ---> execute plsql program with @ sign in the sql prompt
 ---> here plsql
 	SQL> @plsql/first.sql
