@@ -5,9 +5,7 @@
 ```
 	dbms_output.put_line(<string>);
 ```
-<br>
 <hr>
-<br>
 #### Print command with concatenation using pipeline operator - ||
 ```
 	dbms_output.put_line(<string 1> || <string 2>);
