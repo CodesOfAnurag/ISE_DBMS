@@ -18,7 +18,7 @@ dbms_output.put_line(<string>);
 	dbms_output.put_line(<string 1> || <string 2>);
 ```
 
-#### !!!!!!!!!!! Make connection with server for buffer outputs !!!!!!!!!!!
+#### `!!!!!!!!!!! Make connection with server for buffer outputs !!!!!!!!!!!`
 
 
 <hr>
