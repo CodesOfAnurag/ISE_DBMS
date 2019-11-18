@@ -75,3 +75,13 @@ BEGIN   ---> to start execution of some statements
 		<STATEMENT>
 	END;
 ```
+---> implicit cursors
+```
+	sql%found
+	sql%rowcount
+```
+---> explicit cursors
+```
+asssigning type from pre-existing attribute
+	<var> <table_name>.<key>%type
+```
