@@ -2,11 +2,15 @@
 ### BEGIN   ---> to start execution of some statements
 
 #### Print command
-```
+
+	```
 	dbms_output.put_line(<string>);
-```
+	```
+
 <hr>
+
 #### Print command with concatenation using pipeline operator - ||
+
 ```
 	dbms_output.put_line(<string 1> || <string 2>);
 ```
