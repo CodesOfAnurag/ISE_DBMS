@@ -1,20 +1,23 @@
 ### DECLARE ---> not necessary but used to declare variable
 ### BEGIN   ---> to start execution of some statements
 
-#### print command
+#### Print command
 ```
 	dbms_output.put_line(<string>);
 ```
-#### print command with concatenation using pipeline operator - ||
+<br>
+<hr>
+<br>
+#### Print command with concatenation using pipeline operator - ||
 ```
 	dbms_output.put_line(<string 1> || <string 2>);
 ```
 
-#### makes connection with server for buffer outputs
+#### Make connection with server for buffer outputs
 ```
 	SQL> set serveroutput on
 ```
-#### execute plsql program with @ sign in the sql prompt
+#### Execute plsql program with @ sign in the sql prompt
 	 here plsql is directory
 ```
 	SQL> @plsql/first.sql
@@ -22,16 +25,16 @@
 
 	PL/SQL procedure successfully completed.
 ```
-#### comments in plsql
+#### Comments in plsql
 ```
 	<< comment >>
 ```
-#### operator
+#### Operator
 ```
 	:=  Assignment
 	= 	equality
 ```
-#### mathematical functions
+#### Mathematical functions
 ```
 	mod(num1, num2)
 	trunc(<expression>)
