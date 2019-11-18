@@ -1,5 +1,5 @@
-DECLARE ---> not necessary but used to declare variable
-BEGIN   ---> to start execution of some statements
+### DECLARE ---> not necessary but used to declare variable
+### BEGIN   ---> to start execution of some statements
 
 #### print command
 ```
@@ -15,7 +15,7 @@ BEGIN   ---> to start execution of some statements
 	SQL> set serveroutput on
 ```
 #### execute plsql program with @ sign in the sql prompt
-#### here plsql is directory
+	 here plsql is directory
 ```
 	SQL> @plsql/first.sql
 	Hello, World!
