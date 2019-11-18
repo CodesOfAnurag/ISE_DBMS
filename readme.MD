@@ -1,3 +1,4 @@
+
 ### DECLARE ---> not necessary but used to declare variable
 ### BEGIN   ---> to start execution of some statements
 
@@ -144,3 +145,6 @@ dbms_output.put_line(<string>);
 asssigning type from pre-existing attribute
 	<var> <table_name>.<key>%type
 ```
+
+
+<hr>
