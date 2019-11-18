@@ -3,9 +3,9 @@
 
 #### Print command
 
-	```
-	dbms_output.put_line(<string>);
-	```
+```
+dbms_output.put_line(<string>);
+```
 
 <hr>
 
