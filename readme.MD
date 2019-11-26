@@ -164,7 +164,6 @@ Inside the BEGIN block to use cursor
 After using the cursor 
 ```
 	close <cursor_name>
-
 ```
 
 
