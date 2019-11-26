@@ -64,7 +64,7 @@ dbms_output.put_line(<string>);
 	mod(num1, num2)
 	trunc(<expression>)
 ```
-#### input
+#### Taking Input
 
 
 <hr>
@@ -72,7 +72,7 @@ dbms_output.put_line(<string>);
 ```
 	<var> := &<prompt_string>
 ```
-#### if-else condition
+#### Using if-else condition
 
 
 <hr>
@@ -84,7 +84,7 @@ dbms_output.put_line(<string>);
 		<statement>
 	end if;
 ```
-#### for loop
+#### For loop
 
 
 <hr>
@@ -94,7 +94,7 @@ dbms_output.put_line(<string>);
 		<statements>
 	end loop;
 ```
-#### for reverse loop
+#### For reverse loop
 
 
 <hr>
@@ -104,7 +104,7 @@ dbms_output.put_line(<string>);
 		<statements>
 	end loop;
 ```
-#### while loop
+#### While loop
 
 
 <hr>
@@ -114,7 +114,7 @@ dbms_output.put_line(<string>);
 		<statement>
 	end loop;
 ```
-#### procedure
+#### Procedure
 
 
 <hr>
@@ -127,7 +127,7 @@ dbms_output.put_line(<string>);
 		<STATEMENT>
 	END;
 ```
-#### implicit cursors
+#### Implicit Cursors
 
 
 <hr>
@@ -139,7 +139,7 @@ dbms_output.put_line(<string>);
 	<cursor>%rowtype
 	<cursor>%notfound
 ```
-#### explicit cursors
+#### Explicit Cursors
 
 
 <hr>
