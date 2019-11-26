@@ -144,20 +144,25 @@ dbms_output.put_line(<string>);
 
 <hr>
 
-```
+
 Creating new cursor
+```
 	cursor <cursor_name> is <select command>;
+```
 
 Using cursor and fetching data to new variables continuously
+```
 	LOOP
 		fetch <cursor_name> into <attribute_variables>;
 		exit when <cursor_name>%notfound;
 	END LOOP;
-	
+```	
 Inside the BEGIN block to use cursor
+```
 	open <cursor_name>
-
+```
 After using the cursor 
+```
 	close <cursor_name>
 
 ```
