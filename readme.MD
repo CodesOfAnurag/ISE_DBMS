@@ -135,6 +135,9 @@ dbms_output.put_line(<string>);
 ```
 	sql%found
 	sql%rowcount
+	<key>%type
+	<cursor>%rowtype
+	<cursor>%notfound
 ```
 #### explicit cursors
 
@@ -142,8 +145,21 @@ dbms_output.put_line(<string>);
 <hr>
 
 ```
-asssigning type from pre-existing attribute
-	<var> <table_name>.<key>%type
+Creating new cursor
+	cursor <cursor_name> is <select command>;
+
+Using cursor and fetching data to new variables continuously
+	LOOP
+		fetch <cursor_name> into <attribute_variables>;
+		exit when <cursor_name>%notfound;
+	END LOOP;
+	
+Inside the BEGIN block to use cursor
+	open <cursor_name>
+
+After using the cursor 
+	close <cursor_name>
+
 ```
 
 
