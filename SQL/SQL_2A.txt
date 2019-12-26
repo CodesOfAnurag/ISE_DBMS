@@ -1,0 +1,236 @@
+SQL> create table part(
+  2  pno number primary key,
+  3  pname varchar(20) not null,
+  4  color varchar(10) not null
+  5  );
+
+Table created.
+
+SQL> create table supplier(
+  2  sno number primary key,
+  3  sname varchar(20) not null,
+  4  addr varchar(20) not null
+  5  );
+
+Table created.
+
+SQL> create table supply(
+  2  pno number references part(pno) on delete cascade,
+  3  sno number references supplier(sno) on delete cascade,
+  4  qty number not null,
+  5  primary key(pno, sno)
+  6  );
+
+Table created.
+
+SQL> desc part
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PNO                                       NOT NULL NUMBER
+ PNAME                                     NOT NULL VARCHAR2(20)
+ COLOR                                     NOT NULL VARCHAR2(10)
+
+SQL> desc supplier
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SNO                                       NOT NULL NUMBER
+ SNAME                                     NOT NULL VARCHAR2(20)
+ ADDR                                      NOT NULL VARCHAR2(20)
+
+SQL> desc supply
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PNO                                                NUMBER
+ SNO                                                NUMBER
+ QTY                                       NOT NULL NUMBER
+
+SQL> insert into part values(&pno, '&pname', '&color');
+Enter value for pno: 101
+Enter value for pname: nuts
+Enter value for color: silver
+old   1: insert into part values(&pno, '&pname', '&color')
+new   1: insert into part values(101, 'nuts', 'silver')
+
+1 row created.
+
+SQL> /
+Enter value for pno: 102
+Enter value for pname: bolts
+Enter value for color: green
+old   1: insert into part values(&pno, '&pname', '&color')
+new   1: insert into part values(102, 'bolts', 'green')
+
+1 row created.
+
+SQL> /
+Enter value for pno: 103
+Enter value for pname: nails
+Enter value for color: silver
+old   1: insert into part values(&pno, '&pname', '&color')
+new   1: insert into part values(103, 'nails', 'silver')
+
+1 row created.
+
+SQL> /
+Enter value for pno: 104
+Enter value for pname: hammer
+Enter value for color: black
+old   1: insert into part values(&pno, '&pname', '&color')
+new   1: insert into part values(104, 'hammer', 'black')
+
+1 row created.
+
+SQL> select * from part;
+
+       PNO PNAME                COLOR
+---------- -------------------- ----------
+       101 nuts                 silver
+       102 bolts                green
+       103 nails                silver
+       104 hammer               black
+
+SQL> insert into supplier values(&sno, '&sname', '&addr');
+Enter value for sno: 201
+Enter value for sname: Ram
+Enter value for addr: bhilai
+old   1: insert into supplier values(&sno, '&sname', '&addr')
+new   1: insert into supplier values(201, 'Ram', 'bhilai')
+
+1 row created.
+
+SQL> /
+Enter value for sno: 202
+Enter value for sname: Rajan
+Enter value for addr: Durg
+old   1: insert into supplier values(&sno, '&sname', '&addr')
+new   1: insert into supplier values(202, 'Rajan', 'Durg')
+
+1 row created.
+
+SQL> /
+Enter value for sno: 203
+Enter value for sname: Mohan
+Enter value for addr: Raipur
+old   1: insert into supplier values(&sno, '&sname', '&addr')
+new   1: insert into supplier values(203, 'Mohan', 'Raipur')
+
+1 row created.
+
+SQL> select * from supplier;
+
+       SNO SNAME                ADDR
+---------- -------------------- --------------------
+       201 Ram                  bhilai
+       202 Rajan                Durg
+       203 Mohan                Raipur
+
+SQL> insert into supply values(&pno, &sno, &qty);
+Enter value for pno: 101
+Enter value for sno: 201
+Enter value for qty: 1000
+old   1: insert into supply values(&pno, &sno, &qty)
+new   1: insert into supply values(101, 201, 1000)
+
+1 row created.
+
+SQL> /
+Enter value for pno: 102
+Enter value for sno: 202
+Enter value for qty: 1000
+old   1: insert into supply values(&pno, &sno, &qty)
+new   1: insert into supply values(102, 202, 1000)
+
+1 row created.
+
+SQL> /
+Enter value for pno: 103
+Enter value for sno: 203
+Enter value for qty: 50
+old   1: insert into supply values(&pno, &sno, &qty)
+new   1: insert into supply values(103, 203, 50)
+
+1 row created.
+
+SQL> insert into supply values(&pno, &sno, &qty);
+Enter value for pno: 104
+Enter value for sno: 201
+Enter value for qty: 50
+old   1: insert into supply values(&pno, &sno, &qty)
+new   1: insert into supply values(104, 201, 50)
+
+1 row created.
+
+SQL> select * from supply
+  2  ;
+
+       PNO        SNO        QTY
+---------- ---------- ----------
+       101        201       1000
+       102        202       1000
+       103        203         50
+       104        201         50
+
+SQL> select pno from supply
+  2  where sno in (
+  3  select sno from supplier
+  4  where lower(sname) = 'ram'
+  5  );
+
+       PNO
+----------
+       101
+       104
+
+SQL> select pno
+  2  from part natural join supply natural join supplier
+  3  where lower(sname) = 'ram';
+
+       PNO
+----------
+       101
+       104
+
+SQL> select sname
+  2  from part natural join supply natural join supplier
+  3  where lower(pname)='bolts';
+
+SNAME
+--------------------
+Rajan
+
+SQL> select sname
+  2  from supplier
+  3  where sno in (
+  4  select sno
+  5  from supply
+  6  where pno in (
+  7  select pno
+  8  from part
+  9  where lower(pname) = 'bolts' ));
+
+SNAME
+--------------------
+Rajan
+
+SQL> delete part
+  2  where lower(color) = 'green';
+
+1 row deleted.
+
+SQL> select * from part;
+
+       PNO PNAME                COLOR
+---------- -------------------- ----------
+       101 nuts                 silver
+       103 nails                silver
+       104 hammer               black
+
+SQL> select * from supply;
+
+       PNO        SNO        QTY
+---------- ---------- ----------
+       101        201       1000
+       103        203         50
+       104        201         50
+
+SQL>

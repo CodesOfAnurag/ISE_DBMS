@@ -1,0 +1,90 @@
+create table book(
+	isbn number primary key,
+	title varchar(20) not null,
+	author varchar(20) not null,
+	publisher varchar(20) not null
+);
+SQL> desc book
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ISBN                                      NOT NULL NUMBER
+ TITLE                                     NOT NULL VARCHAR2(20)
+ AUTHOR                                    NOT NULL VARCHAR2(20)
+ PUBLISHER                                 NOT NULL VARCHAR2(20)
+
+create table student(
+	usn number primary key,
+	name varchar(20) not null,
+	sem number not null,
+	deptno varchar(3) not null
+);
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ USN                                       NOT NULL NUMBER
+ NAME                                      NOT NULL VARCHAR2(20)
+ SEM                                       NOT NULL NUMBER
+ DEPTNO                                    NOT NULL VARCHAR2(3)
+
+create table borrow(
+	isbn number references book(isbn) on delete cascade,
+	usn number references student(usn) on delete cascade,
+	doi date not null,
+	primary key(isbn, usn)
+);
+SQL> desc borrow
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ISBN                                      NOT NULL NUMBER
+ USN                                       NOT NULL NUMBER
+ DOI                                       NOT NULL DATE
+
+
+insert into book values(1001, 'Mathematics', 'R.D.Sharma', 'S.Chand');
+insert into book values(1002, 'Physics', 'H.C.Verma', 'S.Chand');
+insert into book values(1003, 'Chemistry', 'NCERT', 'NCERT');
+
+SQL> select * from book;
+
+      ISBN TITLE                AUTHOR               PUBLISHER
+---------- -------------------- -------------------- --------------------
+      1001 Mathematics          R.D.Sharma           S.Chand
+      1002 Physics              H.C.Verma            S.Chand
+      1003 Chemistry            NCERT                NCERT
+
+
+insert into student values(251, 'Anurag', 3, 'ISE');
+insert into student values(252, 'Anshu', 5, 'ISE');
+insert into student values(253, 'Anupam', 7, 'CSE');
+insert into student values(254, 'Ajay', 3, 'ECE');
+
+SQL> select * from student;
+
+       USN NAME                        SEM DEP
+---------- -------------------- ---------- ---
+       251 Anurag                        3 ISE
+       252 Anshu                         5 ISE
+       253 Anupam                        7 CSE
+       254 Ajay                          3 ECE
+
+4 rows selected.
+
+insert into borrow values(1001, 251, '23-mar-2020');
+insert into borrow values(1002, 252, '25-mar-2020');
+insert into borrow values(1003, 253, '28-mar-2020');
+insert into borrow values(1001, 254, '21-mar-2020');
+insert into borrow values(1001, 253, '20-mar-2020');
+insert into borrow values(1002, 252, '22-mar-2020');
+
+SQL> select * from borrow;
+
+      ISBN        USN DOI
+---------- ---------- ---------
+      1001        251 23-MAR-20
+      1002        252 25-MAR-20
+      1003        253 28-MAR-20
+      1001        254 21-MAR-20
+      1001        252 20-MAR-20
+      1001        253 20-MAR-20
+
+6 rows selected.

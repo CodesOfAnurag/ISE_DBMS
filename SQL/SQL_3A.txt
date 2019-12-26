@@ -1,0 +1,205 @@
+SQL> create table boat(
+  2  bid number primary key,
+  3  bname varchar(20) not null,
+  4  color varchar(10) not null
+  5  );
+
+Table created.
+
+SQL> create table sailor(
+  2  sid number primary key,
+  3  sname varchar(20) not null,
+  4  age number not null,
+  5  rating number not null
+  6  );
+
+Table created.
+
+SQL> create table reserves(
+  2  bid number references boat(bid) on delete cascade,
+  3  sid number references sailor(sid) on delete cascade,
+  4  day number not null,
+  5  primary key(bid, sid)
+  6  );
+
+Table created.
+
+SQL> desc boat
+ Name                                                                     Null?    Type
+ ------------------------------------------------------------------------ -------- -------------------------------------------------
+ BID                                                                      NOT NULL NUMBER
+ BNAME                                                                    NOT NULL VARCHAR2(20)
+ COLOR                                                                    NOT NULL VARCHAR2(10)
+
+SQL> desc sailor
+ Name                                                                     Null?    Type
+ ------------------------------------------------------------------------ -------- -------------------------------------------------
+ SID                                                                      NOT NULL NUMBER
+ SNAME                                                                    NOT NULL VARCHAR2(20)
+ AGE                                                                      NOT NULL NUMBER
+ RATING                                                                   NOT NULL NUMBER
+
+SQL> desc reserves
+ Name                                                                     Null?    Type
+ ------------------------------------------------------------------------ -------- -------------------------------------------------
+ BID                                                                      NOT NULL NUMBER
+ SID                                                                      NOT NULL NUMBER
+ DAY                                                                      NOT NULL NUMBER
+
+SQL> insert into boat values(&bid, '&bname', '&color');
+Enter value for bid: 12345
+Enter value for bname: Titanic
+Enter value for color: silver
+old   1: insert into boat values(&bid, '&bname', '&color')
+new   1: insert into boat values(12345, 'Titanic', 'silver')
+
+1 row created.
+
+SQL> /
+Enter value for bid: 23456
+Enter value for bname: Oasis
+Enter value for color: black
+old   1: insert into boat values(&bid, '&bname', '&color')
+new   1: insert into boat values(23456, 'Oasis', 'black')
+
+1 row created.
+
+SQL> /
+Enter value for bid: 19871
+Enter value for bname: Enigma
+Enter value for color: brown
+old   1: insert into boat values(&bid, '&bname', '&color')
+new   1: insert into boat values(19871, 'Enigma', 'brown')
+
+1 row created.
+
+SQL> select * from boat;
+
+       BID BNAME                COLOR
+---------- -------------------- ----------
+     12345 Titanic              silver
+     23456 Oasis                black
+     19871 Enigma               brown
+
+SQL> insert into sailor values(&sid, '&sname', &age, &rating);
+Enter value for sid: 101
+Enter value for sname: Ram
+Enter value for age: 35
+Enter value for rating: 5
+old   1: insert into sailor values(&sid, '&sname', &age, &rating)
+new   1: insert into sailor values(101, 'Ram', 35, 5)
+
+1 row created.
+
+SQL> /
+Enter value for sid: 1052
+Enter value for sname: Mohan
+Enter value for age: 54
+Enter value for rating: 4
+old   1: insert into sailor values(&sid, '&sname', &age, &rating)
+new   1: insert into sailor values(1052, 'Mohan', 54, 4)
+
+1 row created.
+
+SQL> insert into sailor values(&sid, '&sname', &age, &rating);
+Enter value for sid: 2321
+Enter value for sname: Roy
+Enter value for age: 45
+Enter value for rating: 4.5
+old   1: insert into sailor values(&sid, '&sname', &age, &rating)
+new   1: insert into sailor values(2321, 'Roy', 45, 4.5)
+
+SQL> select * from sailor;
+
+       SID SNAME                       AGE     RATING
+---------- -------------------- ---------- ----------
+       101 Ram                          35          5
+      1052 Mohan                        54          4
+      2321 Roy                          45        4.5
+
+SQL> insert into reserves values(12345, 101, 1);
+
+1 row created.
+
+SQL> insert into reserves values(12345, 1052, 2);
+
+1 row created.
+
+SQL> insert into reserves values(12345, 2321, 2);
+
+1 row created.
+
+SQL> insert into reserves values(23456, 1052, 3);
+
+1 row created.
+
+SQL> insert into reserves values(23456, 2321, 4);
+
+1 row created.
+
+SQL> insert into reserves values(19871, 101, 6);
+
+1 row created.
+
+SQL> insert into reserves values(23456, 101, 6);
+
+1 row created.
+
+SQL> select * from reserves;
+
+       BID        SID        DAY
+---------- ---------- ----------
+     12345        101          1
+     12345       1052          2
+     12345       2321          2
+     23456       1052          3
+     23456       2321          4
+     19871        101          6
+     23456        101          6
+
+7 rows selected.
+
+SQL> select bid
+  2  from sailor natural join reserves
+  3  where lower(sname)='ram';
+
+       BID
+----------
+     12345
+     19871
+     23456
+
+SQL> select bid
+  2  from reserves
+  3  where sid in (
+  4  select sid
+  5  from sailor
+  6  where lower(sname)='ram' );
+
+       BID
+----------
+     12345
+     19871
+     23456
+
+SQL> select bid
+  2  from reserves
+  3  group by bid
+  4  having count(sid) = (select count(sid)
+  5  from sailor);
+
+       BID
+----------
+     12345
+     23456
+
+SQL> select sid, count(*)
+  2  from reserves
+  3  group by sid
+  4  order by count(*) desc;
+
+       SID   COUNT(*)
+---------- ----------
+       101          3
+      2321          2
+      1052          2

@@ -1,0 +1,143 @@
+create table part(
+	pno number primary key,
+	pname varchar(20) not null,
+	color varchar(20) not null
+);
+
+create table warehouse(
+	wno number primary key,
+	wname varchar(20) not null,
+	city varchar(20) not null
+);
+
+create table shipment(
+	pno number references part(pno) on delete cascade,
+	wno number references warehouse(wno) on delete cascade,
+	qty number not null,
+	tbd date not null,
+	primary key(pno, wno)
+);
+
+SQL> desc part
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PNO                                       NOT NULL NUMBER
+ PNAME                                     NOT NULL VARCHAR2(20)
+ COLOR                                     NOT NULL VARCHAR2(20)
+
+SQL> desc warehouse
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WNO                                       NOT NULL NUMBER
+ WNAME                                     NOT NULL VARCHAR2(20)
+ CITY                                      NOT NULL VARCHAR2(20)
+
+SQL> desc shipment
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PNO                                       NOT NULL NUMBER
+ WNO                                       NOT NULL NUMBER
+ QTY                                       NOT NULL NUMBER
+ TBD                                       NOT NULL DATE
+
+
+insert into part values(101, 'nuts', 'red');
+insert into part values(102, 'bolts', 'yellow');
+insert into part values(103, 'nails', 'green');
+insert into part values(104, 'hammer', 'blue');
+
+SQL> select * from part;
+
+       PNO PNAME                COLOR
+---------- -------------------- --------------------
+       101 nuts                 red
+       102 bolts                yellow
+       103 nails                green
+       104 hammer               blue
+
+
+insert into warehouse values(901, 'Rajputs', 'Bhilai');
+insert into warehouse values(902, 'Shoreys', 'Raipur');
+insert into warehouse values(903, 'Golias', 'Durg');
+
+SQL> select * from warehouse;
+
+       WNO WNAME                CITY
+---------- -------------------- --------------------
+       901 Rajputs              Bhilai
+       902 Shoreys              Raipur
+       903 Golias               Durg
+
+
+insert into shipment values(101, 901, 1000, '23-mar-2019');
+insert into shipment values(101, 902, 1050, '24-mar-2019');
+insert into shipment values(101, 903, 1210, '25-mar-2019');
+insert into shipment values(101, 904, 100, '21-mar-2019');
+insert into shipment values(102, 901, 640, '20-mar-2019');
+insert into shipment values(103, 903, 750, '23-mar-2019');
+insert into shipment values(104, 902, 200, '23-mar-2019');
+
+SQL> select * from shipment;
+
+       PNO        WNO        QTY TBD
+---------- ---------- ---------- ---------
+       101        901       1000 23-MAR-19
+       101        902       1050 24-MAR-19
+       101        903       1210 25-MAR-19
+       102        901        640 20-MAR-19
+       103        903        750 23-MAR-19
+       104        902        200 23-MAR-19
+
+6 rows selected.
+
+
+---------------- A ----------------
+select wname
+from warehouse natural join shipment natural join part
+where color = 'red';
+-----------------------------------
+SQL> select wname
+  2  from warehouse natural join shipment natural join part
+  3  where color = 'red';
+
+WNAME
+--------------------
+Rajputs
+Shoreys
+Golias
+
+---------------- B ----------------
+select pno
+from shipment
+group by pno
+having count(*) = (
+	select count(wno)
+	from warehouse
+);
+-----------------------------------
+SQL> select pno
+  2  from shipment
+  3  group by pno
+  4  having count(*) = (
+  5  select count(wno)
+  6  from warehouse
+  7  );
+
+       PNO
+----------
+       101
+
+---------------- C ----------------
+select wno, count(*)
+from warehouse natural join shipment natural join part
+group by wno;
+-----------------------------------
+SQL> select wno, count(*)
+  2  from warehouse natural join shipment natural join part
+  3  group by wno;
+
+       WNO   COUNT(*)
+---------- ----------
+       903          2
+       901          2
+       902          2
