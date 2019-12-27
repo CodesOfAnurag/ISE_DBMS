@@ -1,0 +1,10 @@
+db.createCollection('warehouse')
+
+db.warehouse.insert({'pno': 101, 'pname':'Nuts', 'color':'blue', 'wno':1002, 'wname':'Raj' , 'qty':1000 ,'date': '23-01-2020'})
+db.warehouse.insert({'pno': 103, 'pname':'Bolts', 'color':'blue', 'wno':1002, 'wname':'Raj' , 'qty':1000 ,'date': '23-01-2020'})
+db.warehouse.insert({'pno': 102, 'pname':'Nails', 'color':'blue', 'wno':1003, 'wname':'Ram' , 'qty':500 ,'date': '23-01-2020'})
+db.warehouse.insert({'pno': 104, 'pname':'Hammer', 'color':'blue', 'wno':1001, 'wname':'Rajan' , 'qty':1500 ,'date': '23-01-2020'})
+
+db.warehouse.find({'wname':'Raj'}, {_id:0, 'pno':1, 'pname':1}).sort({'pno':1})
+db.warehouse.find({'wname':'Raj'}, {_id:0, 'pno':1, 'pname':1}).sort({'pno':-1})
+db.warehouse.find({'wname':'Raj'}, {_id:0, 'pno':1, 'pname':1})

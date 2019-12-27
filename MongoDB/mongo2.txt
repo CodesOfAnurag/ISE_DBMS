@@ -1,0 +1,12 @@
+db.createCollection('part')
+
+db.part.insert({'pno':101, 'pname':'nuts', 'color':'silver', 'sno':'s101', 'sname':'Raj', 'addr':'Bhilai'})
+db.part.insert({'pno':101, 'pname':'nuts', 'color':'brown', 'sno':'s102', 'sname':'Ram', 'addr':'Durg'})
+db.part.insert({'pno':102, 'pname':'bolts', 'color':'silver', 'sno':'s101', 'sname':'Raj', 'addr':'Bhilai'})
+db.part.insert({'pno':102, 'pname':'bolts', 'color':'brown', 'sno':'s102', 'sname':'Ram', 'addr':'Durg'})
+db.part.insert({'pno':103, 'pname':'nails', 'color':'silver', 'sno':'s103', 'sname':'Rajan', 'addr':'Raipur'})
+
+db.part.update({'pno':101},{$set:{'pno':222}},{multi:true})
+
+db.part.find({'pno':222})
+

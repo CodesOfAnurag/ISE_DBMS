@@ -1,0 +1,30 @@
+> db.help()
+> db.stats()
+> show dbs
+
+use <db name>
+> use test
+
+db.createCollection(<name>)
+> db.createCollection('emp')
+
+db.<collectioName>.insert({JSON})
+> db.emp.insert({'ssn':101, 'name':'Anurag', 'deptno':1, 'projectno':'P1'})
+> db.emp.insert({'ssn':102, 'name':'Ajay', 'deptno':3, 'projectno':'P3'})
+> db.emp.insert({'ssn':111, 'name':'Anuj', 'deptno':2, 'projectno':'P2'})
+> db.emp.insert({'ssn':103, 'name':'Anubhav', 'deptno':1, 'projectno':'P1'})
+> db.emp.insert({'ssn':104, 'name':'Anu', 'deptno':2, 'projectno':'P4'})
+> db.emp.insert({'ssn':105, 'name':'Anupam', 'deptno':3, 'projectno':'P3'})
+> db.emp.insert({'ssn':110, 'name':'Anshu', 'deptno':1, 'projectno':'P2'})
+> db.emp.insert({'ssn':106, 'name':'Anup', 'deptno':1, 'projectno':'P2'})
+
+or db.<ColName>.save(document)
+> db.emp.save({'ssn':107, 'name':'Anshul', 'deptno':4, 'projectno':'P5'})
+
+db.<collectioName>.find({condition})
+> db.emp.find({"projectno":'P2'}).pretty()
+> db.emp.find({'deptno':2}).pretty()
+> db.emp.find({$or: [{"projectno":'P2'},{"deptno":1}]}).pretty()
+
+db.update({condition for matching}, {$set: {changes}}, {mutli:<true/false>})
+> db.emp.update({'projectno':"P1"}, {$set:{"deptno":10}}, {multi:true})

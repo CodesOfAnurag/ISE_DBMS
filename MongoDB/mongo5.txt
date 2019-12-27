@@ -1,0 +1,11 @@
+db.createCollection('borrow')
+
+db.borrow.insert({'isbn': 123, 'title':'Database', 'author':'AKB', 'publisher':'WDF', 'usn':1001, 'date':'23-01-2020'})
+db.borrow.insert({'isbn': 123, 'title':'Database', 'author':'AKB', 'publisher':'WDF', 'usn':1003, 'date':'24-01-2020'})
+db.borrow.insert({'isbn': 123, 'title':'Database', 'author':'AKB', 'publisher':'WDF', 'usn':1002, 'date':'27-01-2020'})
+db.borrow.insert({'isbn': 124, 'title':'DSA', 'author':'AKB', 'publisher':'WDF', 'usn':1002, 'date':'21-01-2020'})
+db.borrow.insert({'isbn': 124, 'title':'DSA', 'author':'AKB', 'publisher':'WDF', 'usn':1002, 'date':'29-01-2020'})
+db.borrow.insert({'isbn': 125, 'title':'DAA', 'author':'AKB', 'publisher':'WDF', 'usn':1001, 'date':'28-01-2020'})
+
+> db.borrow.find({'isbn':123},{_id:0, 'usn':1});
+> db.borrow.find({'title':'Database'},{_id:0, 'usn':1});

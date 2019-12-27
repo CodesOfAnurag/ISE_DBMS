@@ -1,0 +1,10 @@
+db.createCollection('boat')
+
+db.boat.insert({'bid':101 ,'bname':'Titanic' ,'color':'silver' ,'sname':'raj' ,'sid':5012 ,'day':'Mon'} )
+db.boat.insert({'bid':101 ,'bname':'Titanic' ,'color':'silver' ,'sname':'ram' ,'sid':5013 ,'day':'Wed'} )
+db.boat.insert({'bid':102 ,'bname':'Oasis' ,'color':'brown' ,'sname':'raj' ,'sid':5012 ,'day':'Thu'} )
+db.boat.insert({'bid':102 ,'bname':'Oasis' ,'color':'brown' ,'sname':'ram' ,'sid':5013 ,'day':'Fri'} )
+db.boat.insert({'bid':101 ,'bname':'Titanic' ,'color':'silver' ,'sname':'raj' ,'sid':5012 ,'day':'Tue'} )
+
+db.boat.find({'sname':'ram'})
+db.boat.find({'color':'silver'},{_id:0,'bname':1})
